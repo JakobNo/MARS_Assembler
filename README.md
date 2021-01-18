@@ -1,3 +1,6 @@
+# Jakobs MARS Fork
+This is a hobby project, customizing MARS to my personal needs. Original readme for the MARS mirror below:
+
 ## MARS Assembler
 [MARS][1] is a lightweight interactive development environment (IDE) for programming in MIPS assembly language, intended for educational-level use with Patterson and Hennessy's Computer Organization and Design.
 
