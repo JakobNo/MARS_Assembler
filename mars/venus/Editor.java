@@ -66,8 +66,10 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
          mainUIbaseTitle = mainUI.getTitle();
          newUsageCount = 0;
       	// Directory from which MARS was launched. Guaranteed to have a value.
-         setDefaultOpenDirectory(System.getProperty("user.dir"));
-         defaultSaveDirectory = System.getProperty("user.dir");
+         //setDefaultOpenDirectory(System.getProperty("user.dir"));
+         //defaultSaveDirectory = System.getProperty("user.dir");
+         setDefaultOpenDirectory(Globals.getSettings().getDefaultDirectory());
+         defaultSaveDirectory = Globals.getSettings().getDefaultDirectory();
          currentOpenDirectory = getDefaultOpenDirectory();
          currentSaveDirectory = defaultSaveDirectory;
       }
