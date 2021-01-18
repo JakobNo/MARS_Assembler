@@ -1,0 +1,122 @@
+package mars.venus;
+
+import mars.simulator.*;
+import mars.*;
+import java.util.*;
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+import javax.swing.text.*;
+import javax.swing.border.*;
+import java.io.*;
+	
+
+/**
+ * Action class for setting the default working directory
+ * @author Jakob
+ */
+public class settingsDefaultDirectoryAction extends GuiAction {
+	
+	JDialog defaultDirectoryDialog;
+	JButton	defualtDirecotryButton;
+	JTextField defaultDirectoryDisplay;
+	JButton selectDirectoryButton;
+	
+	String initialDefaultDirectory;
+	public String pathname;
+
+	public settingsDefaultDirectoryAction(String name, Icon icon, String descrip, 
+								Integer mnemonic, KeyStroke accel, VenusUI gui) {
+		super(name, icon, descrip, mnemonic, accel, gui);
+		initialDefaultDirectory = gui.getEditor().getDefaultOpenDirectory();
+		pathname = initialDefaultDirectory;
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		System.out.println(initialDefaultDirectory);
+		defaultDirectoryDialog = new JDialog(Globals.getGui(), "Default Working Directory", true);
+		defaultDirectoryDialog.setContentPane(buildDialogPanel());
+		defaultDirectoryDialog.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
+		defaultDirectoryDialog.addWindowListener(
+				new WindowAdapter() {
+					public void windowClosing(WindowEvent we) {
+						closeDialog();
+					}
+				});
+		defaultDirectoryDialog.pack();
+		defaultDirectoryDialog.setLocationRelativeTo(Globals.getGui());
+		defaultDirectoryDialog.setVisible(true);
+	}
+	
+	private JPanel buildDialogPanel() {
+		JPanel contents = new JPanel(new BorderLayout(20,20));
+		contents.setBorder(new EmptyBorder(10,10,10,10));
+		
+		JPanel specifyDirectory = new JPanel();
+		selectDirectoryButton = new JButton("Browse");
+		selectDirectoryButton.setEnabled(true);
+		selectDirectoryButton.addActionListener(new selectDirectoryAction());
+		defaultDirectoryDisplay = new JTextField(initialDefaultDirectory);
+		defaultDirectoryDisplay.setEditable(true);
+		specifyDirectory.add(selectDirectoryButton);
+		specifyDirectory.add(defaultDirectoryDisplay);
+		contents.add(specifyDirectory);
+		
+      	// Bottom row - the control buttons for OK and Cancel
+         Box controlPanel = Box.createHorizontalBox();
+         JButton okButton = new JButton("OK");
+         okButton.addActionListener(
+                new ActionListener() {
+                   public void actionPerformed(ActionEvent e) {
+                     performOK();
+                     closeDialog();
+                  }
+               });
+         JButton cancelButton = new JButton("Cancel");
+         cancelButton.addActionListener(
+                new ActionListener() {
+                   public void actionPerformed(ActionEvent e) {
+                     closeDialog();
+                  }
+               });	
+         controlPanel.add(Box.createHorizontalGlue());
+         controlPanel.add(okButton);
+         controlPanel.add(Box.createHorizontalGlue());
+         controlPanel.add(cancelButton);
+         controlPanel.add(Box.createHorizontalGlue());
+         contents.add(controlPanel,BorderLayout.SOUTH);
+
+		return contents;
+	}
+	
+	// User has clicked "ok" button, record the selected directory to settings
+	private void performOK() {
+		// TODO Auto-generated method stub
+		Globals.getSettings().setDefaultDirectory(pathname);
+		System.out.println(Globals.getSettings().getDefaultDirectory());
+	}
+
+	private void closeDialog() {
+		if (initialDefaultDirectory != pathname) {
+			JOptionPane.showMessageDialog(defaultDirectoryDialog, "Restarting MARS is required before changes are applied");
+		}
+		defaultDirectoryDialog.setVisible(false);
+		defaultDirectoryDialog.dispose();
+	}
+	
+	// Associated action class: selecting default working directory. Attached to directory selector
+	private class selectDirectoryAction implements ActionListener {
+		public void actionPerformed(ActionEvent e) {
+
+			JFileChooser chooser = new JFileChooser();
+			chooser.setCurrentDirectory(new File(Globals.getSettings().getDefaultDirectory()));
+			chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+			int result = chooser.showOpenDialog(Globals.getGui());
+			if (result == JFileChooser.APPROVE_OPTION) {
+				pathname = chooser.getSelectedFile().getPath();
+				defaultDirectoryDisplay.setText(pathname);
+			}
+		}
+	}
+}

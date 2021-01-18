@@ -146,15 +146,24 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
       public static final int EDITOR_TAB_SIZE = 5;
    	/** Number of letters to be matched by editor's instruction guide before popup generated (if popup enabled) */
       public static final int EDITOR_POPUP_PREFIX_LENGTH = 6;
+    /** Default directory for opening files */
+      public static final int DEFAULT_DIRECTORY = 7;
    	// Match the above by position.
-      private static final String[] stringSettingsKeys = { "ExceptionHandler", "TextColumnOrder", "LabelSortState", "MemoryConfiguration", "CaretBlinkRate", "EditorTabSize", "EditorPopupPrefixLength" };
+      private static final String[] stringSettingsKeys = { "ExceptionHandler",
+    		  												"TextColumnOrder",
+    		  												"LabelSortState",
+    		  												"MemoryConfiguration",
+    		  												"CaretBlinkRate",
+    		  												"EditorTabSize",
+    		  												"EditorPopupPrefixLength",
+    		  												"DefaultDirectory"};
    
       /** Last resort default values for String settings; 
    	 *  will use only if neither the Preferences nor the properties file work.
    	 *  If you wish to change, do so before instantiating the Settings object.
    	 *  Must match key by list position.
    	 */
-      private static String[] defaultStringSettingsValues = { "", "0 1 2 3 4", "0", "", "500", "8", "2" }; 
+      private static String[] defaultStringSettingsValues = { "", "0 1 2 3 4", "0", "", "500", "8", "2", "" }; 
    
    
       // FONT SETTINGS.  Each array position has associated name.
@@ -727,6 +736,14 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
             }
          return length;
       }
+       
+       /**
+        * Path of default working directory
+        * @return path to set directory
+        */
+       public String getDefaultDirectory() {
+    	   return stringSettingsValues[DEFAULT_DIRECTORY];
+       }
    
    	
    	/**
@@ -1055,6 +1072,14 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
        public void setEditorPopupPrefixLength(int length) {
          setStringSetting(EDITOR_POPUP_PREFIX_LENGTH, ""+length);
       }
+       
+    /**
+     * Set the default working directory for opening files etc.
+     * @param path to point to
+     */
+       public void setDefaultDirectory(String path) {
+    	   setStringSetting(DEFAULT_DIRECTORY, path);
+       }
    
    	/**
    	 * Set editor font to the specified Font object and write it to persistent storage.
@@ -1224,7 +1249,6 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
          }
          return color;
       }
-   
    
       // Maybe someday I'll convert the whole shebang to use Maps.  In the meantime, we use
    	// linear search of array.  Not a huge deal as settings are little-used.
