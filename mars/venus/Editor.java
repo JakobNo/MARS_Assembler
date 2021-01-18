@@ -66,9 +66,9 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
          mainUIbaseTitle = mainUI.getTitle();
          newUsageCount = 0;
       	// Directory from which MARS was launched. Guaranteed to have a value.
-         defaultOpenDirectory = System.getProperty("user.dir");
+         setDefaultOpenDirectory(System.getProperty("user.dir"));
          defaultSaveDirectory = System.getProperty("user.dir");
-         currentOpenDirectory = defaultOpenDirectory;
+         currentOpenDirectory = getDefaultOpenDirectory();
          currentSaveDirectory = defaultSaveDirectory;
       }
    	
@@ -104,7 +104,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
        void setCurrentOpenDirectory(String currentOpenDirectory) {
          File file = new File(currentOpenDirectory);
          if ( !file.exists() || !file.isDirectory() ) {
-            this.currentOpenDirectory = defaultOpenDirectory;
+            this.currentOpenDirectory = getDefaultOpenDirectory();
          } 
          else {
             this.currentOpenDirectory = currentOpenDirectory;
@@ -261,5 +261,13 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
        public boolean editsSavedOrAbandoned() {
          return editTabbedPane.editsSavedOrAbandoned();
       }
+
+public String getDefaultOpenDirectory() {
+	return defaultOpenDirectory;
+}
+
+public void setDefaultOpenDirectory(String defaultOpenDirectory) {
+	this.defaultOpenDirectory = defaultOpenDirectory;
+}
    
    }

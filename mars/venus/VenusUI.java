@@ -75,7 +75,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
       private JCheckBoxMenuItem settingsLabel, settingsPopupInput, settingsValueDisplayBase, settingsAddressDisplayBase,
               settingsExtended, settingsAssembleOnOpen, settingsAssembleAll, settingsWarningsAreErrors, settingsStartAtMain,
       		  settingsDelayedBranching, settingsProgramArguments, settingsSelfModifyingCode;
-      private JMenuItem settingsExceptionHandler, settingsEditor, settingsHighlighting, settingsMemoryConfiguration;
+      private JMenuItem settingsExceptionHandler, settingsDefaultDirectory, settingsEditor, settingsHighlighting, settingsMemoryConfiguration;
       private JMenuItem helpHelp, helpAbout;
          
       // components of the toolbar
@@ -100,7 +100,8 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                      settingsExtendedAction, settingsAssembleOnOpenAction, settingsAssembleAllAction,
       					settingsWarningsAreErrorsAction, settingsStartAtMainAction, settingsProgramArgumentsAction,
       					settingsDelayedBranchingAction, settingsExceptionHandlerAction, settingsEditorAction,
-      					settingsHighlightingAction, settingsMemoryConfigurationAction, settingsSelfModifyingCodeAction;    
+      					settingsHighlightingAction, settingsMemoryConfigurationAction, settingsSelfModifyingCodeAction,
+      					settingsDefaultDirectoryAction;    
       private Action helpHelpAction, helpAboutAction;
       private Action fileRefreshAllAction;
    
@@ -448,6 +449,10 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
                									  "View and modify memory segment base addresses for simulated MIPS.",
                									  null,null,
                									  mainUI);
+            settingsDefaultDirectoryAction	= new settingsDefaultDirectoryAction("Set working directory...",
+            								null, "Set the default directory for opening files",
+            								null, null,
+            								mainUI);
             helpHelpAction = new HelpHelpAction("Help", 
                                             new ImageIcon(tk.getImage(cs.getResource(Globals.imagesPath+"Help22.png"))),
                									  "Help", new Integer(KeyEvent.VK_H),
@@ -608,6 +613,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
          settingsEditor = new JMenuItem(settingsEditorAction);
          settingsHighlighting = new JMenuItem(settingsHighlightingAction);
          settingsExceptionHandler = new JMenuItem(settingsExceptionHandlerAction);
+         settingsDefaultDirectory = new JMenuItem(settingsDefaultDirectoryAction);
          settingsMemoryConfiguration = new JMenuItem(settingsMemoryConfigurationAction);
       	
          settings.add(settingsLabel);
@@ -628,6 +634,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
          settings.add(settingsEditor);
          settings.add(settingsHighlighting);
          settings.add(settingsExceptionHandler);
+         settings.add(settingsDefaultDirectory);
          settings.add(settingsMemoryConfiguration);
       			
          helpHelp = new JMenuItem(helpHelpAction);
