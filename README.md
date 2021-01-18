@@ -1,4 +1,4 @@
-# Jakobs MARS Fork
+# Jakob's MARS Fork
 This is a hobby project, customizing MARS to my personal needs. Original readme for the MARS mirror below:
 
 ## MARS Assembler
